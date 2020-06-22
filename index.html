@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>EasyDD</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" type="text/css" media="screen" href="./style.css" />
+
+  <script type="module" src="./js/main.js" defer></script>
+
+</head>
+
+<body>
+
+  <section>
+    <img id="logo" src="images/logo.png">
+    <h1>EasyDD</h1>
+    <p>EasyDD is a tool that scrapes stock related subreddits for due diligence posts and ticker mentions.
+      It will specifically search for stock tickers and count how often they're used, as well as consolidate
+      the most recent due diligence posts so that you can gain insight into current trends in the market
+      based on online communities and their discussions.</p>
+
+    <p>It works by searching for text patterns with regular expressions to match the format of a typical stock
+      ticker. Patterns include whether or not a dollar sign preceeds the ticker, if the ticker is fully capitalized,
+      if it's between 1-6 letters, if it's in the right context, etc.
+    </p>
+  </section>
+
+
+  <section>
+    <h2>Parameters</h2>
+    <table>
+      <tr>
+        <td>
+          <label for="maxPages">Amount of pages (each page is 25 posts)</label>
+          <p class="subtext">This parameter determines the amount of pages to parse through.
+            Each page contains 25 posts. Adding more pages creates longer loading times. It automatically
+            parses from the most recent posts to the oldest posts.</p>
+        </td>
+        <td>
+          <div class="centerDivItems">
+            <input id="maxPages" name="maxPages" type="range" min="1" max="100" value="1">
+          </div>
+          <div class="centerDivItems">
+            <p id="maxPagesFeedback">( 1 / 100 )</p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="topTickerCount">Top ticker count</label>
+          <p class="subtext">This parameter determines how many tickers will appear in the list of most
+            mentioned tickers within the data.</p>
+        </td>
+        <td>
+          <input id="topTickerCount" name="topTickerCount" type="number" min="1" max="50" value="10">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="allowOneLetterTickers">Allow one letter tickers?</label>
+          <p class="subtext">This parameter determines if 1 letter long tickers are allowed.
+            This is disabled by default because the scraper's logic cannot distinguish between
+            single letter words and references to single letter tickers (enable at your
+            own risk). You can compensate for this by adding more excluded words below.</p>
+        </td>
+        <td>
+          <input id="allowOneLetterTickers" name="allowOneLetterTickers" type="checkbox">
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <label for="excluded">Excluded words</label>
+          <p class="subtext">The scraper searches for capital letter sequences, which might include
+            words that are not actually tickers. This parameter determines which words are excluded
+            to be counted as tickers. To add more exclusions, type in a comma or space seperated
+            list of tickers (case-sensitive) and click 'add words'.</p>
+        </td>
+        <td>
+          <input id="excluded" name="excluded" type="text">
+          <div class="centerDivItems">
+            <button id="addTickers" class="spacing">Add Words</button>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <p>Excluded words: </p>
+    <p id="excludedWords"></p>
+
+  </section>
+
+  <section>
+    <div class="centerDivItems">
+      <p>Click the button below to generate results.</p>
+    </div>
+    <div class="centerDivItems">
+      <button id="generate">Generate Summary</button>
+    </div>
+    <div class="centerDivItems">
+      <p id="generateFeedback"></p>
+    </div>
+  </section>
+
+  <section>
+    <h2 id="topTickersLabel">Top 10 Most Mentioned Tickers</h2>
+    <p>This may include some keywords that are not actually tickers like "COVID" or "DD".</p>
+    <div id="tickers">
+    </div>
+  </section>
+
+  <section>
+    <h2>Due Diligence Posts</h2>
+    <p>Below are the generated results for collected due diligence posts. Click on the name to expand or collapse the
+      post. Each row contains the
+      amount of <span style="color: #FFD31A;">upvotes</span> and <span style="color: #45B5AA;">comments</span> so that
+      you can see at a glance
+      the posts that have the most activity, discussion, or approval from their community.</p>
+    <div class="centerDivItems">
+      <button id="ddPrev" class="spacing">Prev Page</button>
+      <span id="ddPageCount">( 0 / 0 )</span>
+      <button id="ddNext" class="spacing">Next Page</button>
+    </div>
+
+    <div id="dd">
+    </div>
+
+  </section>
+
+
+  <footer>
+    <div class="centerDivItems">
+      <p>© 2020 Joshua Maza | EasyDD</p>
+    </div>
+  </footer>
+
+</body>
+
+</html>
