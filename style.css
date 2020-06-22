@@ -20,6 +20,7 @@ section {
 
 footer {
     padding-top: 100px;
+    padding-bottom: 50px;
 }
 
 button {
@@ -46,11 +47,21 @@ td {
     padding-bottom: 20px;
 }
 
+a {
+    text-decoration: none;
+    color: #C04E38;
+}
+
 #logo {
     display: block;
     width: 300px;
     height: auto;
     margin: auto;
+}
+
+#githubLogo {
+    width: 40px;
+    height: 40px;
 }
 
 .subtext {
